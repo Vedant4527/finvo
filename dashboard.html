@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - FINVO PMS</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg fixed w-full z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <h2 class="text-2xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">
+                        FINVO
+                    </h2>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="portfolio-results.html" class="text-gray-700 hover:text-purple-600 px-3 py-2 rounded-md text-sm font-medium">
+                        <i class="fas fa-chart-pie mr-2"></i>Portfolio
+                    </a>
+                    <a href="index.html" class="text-gray-700 hover:text-purple-600 px-3 py-2 rounded-md text-sm font-medium">
+                        <i class="fas fa-home mr-2"></i>Home
+                    </a>
+                    <button onclick="logout()" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md text-sm font-medium">
+                        <i class="fas fa-sign-out-alt mr-2"></i>Logout
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="pt-16">
+        <!-- Header Section -->
+        <div class="bg-gradient-to-r from-purple-600 to-blue-600 text-white py-8">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h1 class="text-3xl font-bold mb-2">Welcome back, <span id="user-name">User</span>!</h1>
+                        <p class="text-lg opacity-90">Here's your financial overview</p>
+                    </div>
+                    <div class="text-right">
+                        <p class="text-sm opacity-75">Last updated</p>
+                        <p class="text-lg font-semibold" id="last-updated">Today</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Key Metrics -->
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                <!-- Total Invested Amount -->
+                <div class="bg-white rounded-lg shadow-lg p-6">
+                    <div class="flex items-center">
+                        <div class="p-3 rounded-full bg-green-100 text-green-600">
+                            <i class="fas fa-chart-line text-xl"></i>
+                        </div>
+                        <div class="ml-4">
+                            <p class="text-sm font-medium text-gray-600">Total Invested</p>
+                            <p class="text-2xl font-bold text-gray-900" id="total-invested">₹0</p>
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                        <span class="text-green-600 text-sm font-medium">
+                            <i class="fas fa-arrow-up mr-1"></i>+12.5%
+                        </span>
+                        <span class="text-gray-500 text-sm ml-2">vs last month</span>
+                    </div>
+                </div>
+
+                <!-- Savings Balance -->
+                <div class="bg-white rounded-lg shadow-lg p-6">
+                    <div class="flex items-center">
+                        <div class="p-3 rounded-full bg-blue-100 text-blue-600">
+                            <i class="fas fa-piggy-bank text-xl"></i>
+                        </div>
+                        <div class="ml-4">
+                            <p class="text-sm font-medium text-gray-600">Savings Balance</p>
+                            <p class="text-2xl font-bold text-gray-900" id="savings-balance">₹0</p>
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                        <span class="text-green-600 text-sm font-medium">
+                            <i class="fas fa-arrow-up mr-1"></i>+8.2%
+                        </span>
+                        <span class="text-gray-500 text-sm ml-2">vs last month</span>
+                    </div>
+                </div>
+
+                <!-- High-Liquid Fund -->
+                <div class="bg-white rounded-lg shadow-lg p-6">
+                    <div class="flex items-center">
+                        <div class="p-3 rounded-full bg-indigo-100 text-indigo-600">
+                            <i class="fas fa-water text-xl"></i>
+                        </div>
+                        <div class="ml-4">
+                            <p class="text-sm font-medium text-gray-600">Liquid Fund</p>
+                            <p class="text-2xl font-bold text-gray-900" id="liquid-fund">₹0</p>
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                        <span class="text-green-600 text-sm font-medium">
+                            <i class="fas fa-arrow-up mr-1"></i>+5.8%
+                        </span>
+                        <span class="text-gray-500 text-sm ml-2">vs last month</span>
+                    </div>
+                </div>
+
+                <!-- Total Returns -->
+                <div class="bg-white rounded-lg shadow-lg p-6">
+                    <div class="flex items-center">
+                        <div class="p-3 rounded-full bg-purple-100 text-purple-600">
+                            <i class="fas fa-trophy text-xl"></i>
+                        </div>
+                        <div class="ml-4">
+                            <p class="text-sm font-medium text-gray-600">Total Returns</p>
+                            <p class="text-2xl font-bold text-gray-900" id="total-returns">₹0</p>
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                        <span class="text-green-600 text-sm font-medium">
+                            <i class="fas fa-arrow-up mr-1"></i>+18.5%
+                        </span>
+                        <span class="text-gray-500 text-sm ml-2">vs last month</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Charts Section -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+                <!-- Portfolio Growth Chart -->
+                <div class="bg-white rounded-lg shadow-lg p-6">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-4">Portfolio Growth</h3>
+                    <div class="h-80">
+                        <canvas id="growthChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Portfolio Allocation Chart -->
+                <div class="bg-white rounded-lg shadow-lg p-6">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-4">Portfolio Allocation</h3>
+                    <div class="h-80">
+                        <canvas id="allocationChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Additional Metrics -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Monthly SIP -->
+                <div class="bg-white rounded-lg shadow-lg p-6">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-4">Monthly SIP</h3>
+                    <div class="space-y-4">
+                        <div class="flex justify-between items-center">
+                            <span class="text-gray-600">Current SIP</span>
+                            <span class="font-semibold text-green-600" id="current-sip">₹0</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-gray-600">Recommended</span>
+                            <span class="font-semibold text-blue-600" id="recommended-sip">₹0</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-2">
+                            <div class="bg-green-600 h-2 rounded-full" id="sip-progress" style="width: 75%"></div>
+                        </div>
+                        <p class="text-sm text-gray-500">75% of recommended SIP amount</p>
+                    </div>
+                </div>
+
+                <!-- Risk Score -->
+                <div class="bg-white rounded-lg shadow-lg p-6">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-4">Risk Score</h3>
+                    <div class="text-center">
+                        <div class="text-4xl font-bold text-purple-600 mb-2" id="risk-score">7.2</div>
+                        <p class="text-sm text-gray-600 mb-4">Moderate Risk</p>
+                        <div class="w-full bg-gray-200 rounded-full h-3 mb-4">
+                            <div class="bg-purple-600 h-3 rounded-full" style="width: 72%"></div>
+                        </div>
+                        <div class="flex justify-between text-xs text-gray-500">
+                            <span>Low</span>
+                            <span>High</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Cashflow Insights -->
+                <div class="bg-white rounded-lg shadow-lg p-6">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-4">Cashflow Insights</h3>
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between p-3 bg-green-50 rounded-lg">
+                            <div class="flex items-center">
+                                <i class="fas fa-arrow-up text-green-600 mr-2"></i>
+                                <span class="text-sm text-gray-700">Income</span>
+                            </div>
+                            <span class="font-semibold text-green-600" id="monthly-income">₹0</span>
+                        </div>
+                        <div class="flex items-center justify-between p-3 bg-red-50 rounded-lg">
+                            <div class="flex items-center">
+                                <i class="fas fa-arrow-down text-red-600 mr-2"></i>
+                                <span class="text-sm text-gray-700">Expenses</span>
+                            </div>
+                            <span class="font-semibold text-red-600" id="monthly-expenses">₹0</span>
+                        </div>
+                        <div class="flex items-center justify-between p-3 bg-blue-50 rounded-lg">
+                            <div class="flex items-center">
+                                <i class="fas fa-chart-line text-blue-600 mr-2"></i>
+                                <span class="text-sm text-gray-700">Savings</span>
+                            </div>
+                            <span class="font-semibold text-blue-600" id="monthly-savings">₹0</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Activity -->
+            <div class="bg-white rounded-lg shadow-lg p-6 mt-8">
+                <h3 class="text-lg font-semibold text-gray-800 mb-4">Recent Activity</h3>
+                <div class="space-y-4">
+                    <div class="flex items-center justify-between p-4 border border-gray-200 rounded-lg">
+                        <div class="flex items-center">
+                            <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center mr-4">
+                                <i class="fas fa-plus text-green-600"></i>
+                            </div>
+                            <div>
+                                <p class="font-medium text-gray-800">SIP Investment</p>
+                                <p class="text-sm text-gray-500">Equity Mutual Fund</p>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <p class="font-semibold text-green-600">+₹5,000</p>
+                            <p class="text-sm text-gray-500">2 hours ago</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between p-4 border border-gray-200 rounded-lg">
+                        <div class="flex items-center">
+                            <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center mr-4">
+                                <i class="fas fa-sync-alt text-blue-600"></i>
+                            </div>
+                            <div>
+                                <p class="font-medium text-gray-800">Portfolio Rebalancing</p>
+                                <p class="text-sm text-gray-500">Automatic adjustment</p>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <p class="font-semibold text-blue-600">Updated</p>
+                            <p class="text-sm text-gray-500">1 day ago</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between p-4 border border-gray-200 rounded-lg">
+                        <div class="flex items-center">
+                            <div class="w-10 h-10 bg-yellow-100 rounded-full flex items-center justify-center mr-4">
+                                <i class="fas fa-chart-line text-yellow-600"></i>
+                            </div>
+                            <div>
+                                <p class="font-medium text-gray-800">Market Update</p>
+                                <p class="text-sm text-gray-500">Nifty 50 +2.5%</p>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <p class="font-semibold text-yellow-600">+₹12,500</p>
+                            <p class="text-sm text-gray-500">3 days ago</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="dashboard.js"></script>
+</body>
+</html>
+
+
+
+
+
